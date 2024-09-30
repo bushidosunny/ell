@@ -8,13 +8,14 @@ import json
 from ell.configurator import config, register_provider
 from ell.types.message import LMP
 from ell.util.serialization import serialize_image
-from botocore.eventstream import (EventStream)
 from io import BytesIO
-from botocore.client import BaseClient
 import requests
 from PIL import Image as PILImage
 
 try:
+
+    from botocore.eventstream import (EventStream)
+    from botocore.client import BaseClient
 
     class BedrockProvider(Provider):
         dangerous_disable_validation = True
@@ -154,6 +155,7 @@ try:
 
             # process metadata for ell
             # XXX: Unify an ell metadata format for ell studio.
+            usage = {} if not usage else usage
             usage["prompt_tokens"] = usage.get("inputTokens", 0)
             usage["completion_tokens"] = usage.get("outputTokens", 0)
             usage["total_tokens"] = usage['prompt_tokens'] + usage['completion_tokens']
