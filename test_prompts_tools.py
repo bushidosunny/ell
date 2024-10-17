@@ -6,6 +6,7 @@ import ell
 import requests
 
 import ell.lmp.tool
+from prompt_lists import *
 
 ell.init(verbose=True, store=("./logdir"), autocommit=True)
 
@@ -28,7 +29,7 @@ def summarize_website(website :str) -> str:
 
 
 if __name__ == "__main__":
-    output = summarize_website("nike website")
+    output = summarize_website("langchains website")
     print(output)
     if output.tool_calls:
         tool_results = output.call_tools_and_collect_as_message()
