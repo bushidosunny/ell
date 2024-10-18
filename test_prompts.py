@@ -70,22 +70,31 @@ def summarize_case_gpt4o_mini(case : str, system_instructions : str):
 # test_case_gpt4o(case)
 # test_case_gpto1_preview(case)
 
-
-# test_case_claude_3_5s("what is a good broad spectrum antibiotic where the patient may have a uti and is sepsis?", starting_prompt)
-
-
-response1 = test_case_claude_3_5s(case_thyroid, default_system_prompt_NDJSON)
-response2 = test_case_claude_3_5s(case_45F_saddle_PE, default_system_prompt_NDJSON)
-response3 = test_case_claude_3_5s(case_50F_native_american_flu, default_system_prompt_NDJSON)
-
-
-# response1 = test_case_claude_3_5s(case_10M_mexican_URI, general_medicine_system_natural)
-# summarize_case_gpt4o_mini(response1,summarize_case_grouped_by_test)
-# summarize_case_gpt4o_mini(case_thyroid2,create_json_prompt)
-
-# response2 = test_case_claude_3_5s(f"""Chat history:{response1}
-#                       user: {"write a full note"}""", note_writer_system_naturalpathic_clinic_note)
+# testing iterative system prompts
+response1 = test_case_claude_3_5s(case_thyroid, default_system_prompt_NDJSON_iterative)
+response2 = test_case_claude_3_5s(f"""
+<conversation>
+    <turn>
+        <user>{case_thyroid}</user>
+        <ai>{response1}</ai>
+    </turn>
+    <turn>
+        <user>{case_thyroid_user_prompt2}</user>
+    </turn>
+</conversation>
+""",default_system_prompt_NDJSON_iterative)
 
 
-# summarize_case_gpt4o_mini(sample_result,summarize_case_grouped_by_test)
-
+# response3 = test_case_claude_3_5s(case_thyroid, default_system_prompt_NDJSON_iterative_2)
+# response4 = test_case_claude_3_5s(f"""
+# <conversation>
+#     <turn>
+#         <user>{case_thyroid}</user>
+#         <ai>{response3}</ai>
+#     </turn>
+#     <turn>
+#         <user>{case_thyroid_user_prompt2}</user>
+#     </turn>
+# </conversation>
+# """,
+# default_system_prompt_NDJSON_iterative_2)
